@@ -7,7 +7,7 @@
     <title>Iniciar Sesión | SWGRVB</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <meta content="LARC CONSULTORES CLIENTES" name="description" />
+    <meta content="SWGRVB" name="description" />
     <!-- App favicon -->
     {{-- <link rel="shortcut icon" href="{{ URL::asset('assets/images/racso/Favicon_new_racso.png') }}"> --}}
 
