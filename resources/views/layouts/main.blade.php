@@ -208,12 +208,12 @@
                     <ul class="navbar-nav" id="navbar-nav">
                         <li class="menu-title"><span data-key="t-menu">ADMINISTRACION</span></li>
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="javascript:void(0);">
+                            <a class="nav-link menu-link" href="{{ route('home') }}">
                                 <i class="las la-home"></i> <span data-key="t-widgets">Inicio</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="javascript:void(0);">
+                            <a class="nav-link menu-link" href="{{ route('registroUsuarios')}}">
                                 <i class="las la-user-alt"></i> <span data-key="t-widgets">Registro Usuarios</span>
                             </a>
                         </li>
