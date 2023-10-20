@@ -258,7 +258,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="javascript:void(0);">
+                            <a class="nav-link menu-link" href="{{ route('configuracionEmpresa.configurarEmpresaVista')}}">
                                 <i class="las la-tools"></i> <span data-key="t-widgets">Configuracion Empresa</span>
                             </a>
                         </li>
