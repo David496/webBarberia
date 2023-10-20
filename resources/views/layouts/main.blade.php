@@ -248,7 +248,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="javascript:void(0);">
+                            <a class="nav-link menu-link" href="{{ route('registroClientes')}}">
                                 <i class="las la-person-booth"></i> <span data-key="t-widgets">Registro Clientes</span>
                             </a>
                         </li>

@@ -97,7 +97,7 @@ class registroUsuarioController extends Controller
             $verificarUsuario = User::where('dni', $request->dni)->orwhere('email', $request->email)->first();
             if ($verificarUsuario) {
                 $return = [
-                    'status' => 'ok',
+                    'status' => 'error',
                     'titulo' => '¡El Usuario ya existe!',
                     'message' => 'El Usuario ya existe: Ingrese otro email o DNI!'
                 ];
