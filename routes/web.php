@@ -50,3 +50,11 @@ Route::post('/registroServicios/productoServicios/agregarServicio', 'registroSer
 Route::get('/registroServicios/productoServicios/getServicio/{id}', 'registroServicioController@getServicio')->name('servicios.getServicio');
 Route::post('/registroServicios/productoServicios/editarServicio', 'registroServicioController@editarServicio')->name('servicios.editarServicio');
 Route::post('/registroServicios/productoServicios/eliminarServicio', 'registroServicioController@eliminarServicio')->name('servicios.eliminarServicio');
+
+//GESTIONAR PRODUCTOS
+Route::get('/registroProductos/productoServicios/productos', 'registroProductoController@registroProductoVista')->name('productos.registroProductoVista');
+Route::get('/registroProductos/productoServicios/tablaProducto', 'registroProductoController@tablaProducto')->name('productos.tablaProducto');
+Route::post('/registroProductos/productoServicios/agregarProducto', 'registroProductoController@agregarProducto')->name('productos.agregarProducto');
+Route::get('/registroProductos/productoServicios/getProducto/{id}', 'registroProductoController@getProducto')->name('productos.getProducto');
+Route::post('/registroProductos/productoServicios/editarProducto', 'registroProductoController@editarProducto')->name('productos.editarProducto');
+Route::post('/registroProductos/productoServicios/eliminarProducto', 'registroProductoController@eliminarProducto')->name('productos.eliminarProducto');
