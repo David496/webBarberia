@@ -218,9 +218,10 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#productoServicio" class="nav-link"
+                            <a href="#productoServicio" class="nav-link menu-link"
                                 data-bs-toggle="collapse" role="button" aria-expanded="false"
-                                aria-controls="productoServicio" data-key="t-projects"><i class="lab la-buffer"></i><span>Productos/Servicios</span>
+                                aria-controls="productoServicio">
+                                <i class="lab la-buffer"></i><span data-key="t-dashboards">Productos/Servicios</span>
                             </a>
                             <div class="collapse menu-dropdown" id="productoServicio">
                                 <ul class="nav nav-sm flex-column">
@@ -230,8 +231,8 @@
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="javascript:void(0);"
-                                            class="nav-link" data-key="t-list"> Servicios
+                                        <a href="{{ route('servicios.registroServicioVista')}}"
+                                            class="nav-link" data-key="t-service"> Servicios
                                         </a>
                                     </li>
                                 </ul>

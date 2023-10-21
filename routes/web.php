@@ -42,3 +42,11 @@ Route::post('/registroClientes/agregarCliente', 'registroClienteController@agreg
 Route::get('/registroClientes/getCliente/{id}', 'registroClienteController@getCliente')->name('registroClientes.getCliente');
 Route::post('/registroClientes/editarCliente', 'registroClienteController@editarCliente')->name('registroClientes.editarCliente');
 Route::post('/registroClientes/eliminarCliente', 'registroClienteController@eliminarCliente')->name('registroClientes.eliminarCliente');
+
+//GESTIONAR SERVICIOS
+Route::get('/registroServicios/productoServicios/servicios', 'registroServicioController@registroServicioVista')->name('servicios.registroServicioVista');
+Route::get('/registroServicios/productoServicios/tablaServicio', 'registroServicioController@tablaServicio')->name('servicios.tablaServicio');
+Route::post('/registroServicios/productoServicios/agregarServicio', 'registroServicioController@agregarServicio')->name('servicios.agregarServicio');
+Route::get('/registroServicios/productoServicios/getServicio/{id}', 'registroServicioController@getServicio')->name('servicios.getServicio');
+Route::post('/registroServicios/productoServicios/editarServicio', 'registroServicioController@editarServicio')->name('servicios.editarServicio');
+Route::post('/registroServicios/productoServicios/eliminarServicio', 'registroServicioController@eliminarServicio')->name('servicios.eliminarServicio');
