@@ -125,7 +125,7 @@
                         </button>
 
                         <div class=" d-md-block d-none" style="line-height: 72px;">
-                            <span class="text-white text-nowrap">NOMBRE DE EMPRESA</span>
+                            <span class="text-white text-nowrap">{{isset($empresa->razon_social) ? $empresa->razon_social : ''}}</span>
                         </div>
 
                     </div>

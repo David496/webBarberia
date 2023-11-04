@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Empresa;
 use App\Models\Servicio;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,8 +16,8 @@ class registroServicioController extends Controller
     }
 
     public function registroServicioVista(){
-
-        return view('gestionarServicio.gestionarServicio');
+        $empresa = Empresa::first();
+        return view('gestionarServicio.gestionarServicio', compact('empresa'));
     }
 
     public function tablaServicio()

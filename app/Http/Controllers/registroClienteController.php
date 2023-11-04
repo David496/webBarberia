@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use App\Models\Empresa;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -15,8 +16,8 @@ class registroClienteController extends Controller
     }
 
     public function registroClienteVista(){
-
-        return view('registroCliente.registroCliente');
+        $empresa = Empresa::first();
+        return view('registroCliente.registroCliente', compact('empresa'));
     }
 
     public function tablaCliente()

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Empresa;
 use App\Models\Producto;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -15,8 +16,8 @@ class registroProductoController extends Controller
     }
 
     public function registroProductoVista(){
-
-        return view('gestionarProducto.gestionarProducto');
+        $empresa = Empresa::first();
+        return view('gestionarProducto.gestionarProducto', compact('empresa'));
     }
 
     public function tablaProducto()

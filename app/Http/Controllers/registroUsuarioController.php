@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Empresa;
 use App\User;
 use Carbon\Carbon;
 use Exception;
@@ -18,6 +19,7 @@ class registroUsuarioController extends Controller
     }
 
     public function registroUsuarioVista(){
+        $empresa = Empresa::first();
         $tipoUsuario = [
             '' => '[Seleccione tipo]',
             'Administrador' => 'Administrador',
@@ -32,7 +34,7 @@ class registroUsuarioController extends Controller
 
         $data['tipoUsuario'] = $tipoUsuario;
         $data['estado'] = $estado;
-        return view('registroUsuarios.registroUsuarios', compact('data'));
+        return view('registroUsuarios.registroUsuarios', compact('data', 'empresa'));
     }
 
     public function tablaUsuario()
@@ -80,10 +82,14 @@ class registroUsuarioController extends Controller
                 return '<span class="badge bg-light text-dark text-wrap text-left "> <i class="bx bx-calendar text-success"></i><strong>' . $fechaCancelacion . '</strong></span></td>';
             })
             ->addColumn('options', function ($row) {
+                $disabled = '';
+                if ($row->id === 1) {
+                    $disabled =  'disabled';
+                }
                 return '<button data-toggle="tooltip" data-placement="auto" title="Editar" onclick="editarUsuario(' . $row->id . ')" class="btn px-2 py-0 btn-lg waves-effect waves-light btn-info">
                 <i class="las la-edit"></i>
                 </button>
-                <button data-toggle="tooltip" data-placement="auto" title="Eliminar" onclick="eliminarUsuario(' . $row->id . ')" class="btn px-2 py-0 btn-lg waves-effect waves-light btn-danger ">
+                <button data-toggle="tooltip" data-placement="auto" title="Eliminar" onclick="eliminarUsuario(' . $row->id . ')" class="btn px-2 py-0 btn-lg waves-effect waves-light btn-danger" '.$disabled.'>
                 <i class="las la-trash-alt"></i>
                 </button>';
             })
