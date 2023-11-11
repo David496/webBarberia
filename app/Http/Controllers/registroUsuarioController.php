@@ -75,6 +75,15 @@ class registroUsuarioController extends Controller
                     return '<span class="text-left text-uppercase">' . $estado . ' </span>';
                 }
             })
+            ->addColumn('foto', function ($row) {
+                if ($row->foto_archivo){
+                    $nombre = $row->foto_archivo;
+                    $rutaCompleta = 'images/usuarios/'.$nombre;
+                    return '<img src="' . asset($rutaCompleta) . '" alt="'.$row->name.'" class="img-fluid img-thumbnail" width="60px" id="img_id">';
+                } else {
+                    return '<span class="badge bg-light text-dark text-wrap text-left " id="img_id"> <i class="bx bx-x-circle text-danger"></i><strong>No Registra</strong></span>';
+                }
+            })
             ->addColumn('fechaCrea', function ($row) {
                 $fechaCancelacion = '-';
                 $fecha = $row->created_at;
@@ -93,7 +102,7 @@ class registroUsuarioController extends Controller
                 <i class="las la-trash-alt"></i>
                 </button>';
             })
-            ->rawColumns(['nombre', 'nroDoc', 'rol', 'email', 'fechaCrea', 'estado', 'options'])
+            ->rawColumns(['nombre', 'nroDoc', 'rol', 'email', 'fechaCrea', 'estado', 'options', 'foto'])
             ->toJson();
     }
 
@@ -128,6 +137,21 @@ class registroUsuarioController extends Controller
                 return $return;
             }
 
+            if ($request->file('imagen') != null && $request->file('imagen')->isValid()) {
+                $extension = $request->imagen->getClientOriginalExtension();
+                $extensionesPermitidas = ['jpg', 'jpeg', 'png'];
+                if (in_array(strtolower($extension), $extensionesPermitidas)) {
+                    // La extensión es válida, puedes continuar con el código para procesar el archivo.
+                } else {
+                    $return = [
+                        'status' => 'error',
+                        'titulo' => '¡Extensión inválida!',
+                        'message' => '<strong>Solo se permiten imágenes con extensiones .jpg, .jpeg o .png</strong>'
+                    ];
+                    return $return;
+                }
+            }
+
             $user = new User();
             $user->name = $request->name;
             $user->apellidosP = $request->apellidoP;
@@ -141,6 +165,15 @@ class registroUsuarioController extends Controller
             $user->estado = $request->estado;
             $user->password = Hash::make($request->password);
             $user->save();
+
+            if ($request->file('imagen') != null && $request->file('imagen')->isValid()) {
+                $userId = $user->id;
+                $extension = strtolower($request->imagen->getClientOriginalExtension());
+                $imageName = 'userImg_' . $userId . '.' . $extension;
+                $request->imagen->move(public_path('images/usuarios'), $imageName);
+                $user->foto_archivo = $imageName;
+                $user->save();
+            }
 
             $return = [
                 'status' => 'ok',
@@ -162,6 +195,10 @@ class registroUsuarioController extends Controller
     public function eliminarUsuario(Request $request){
         try {
             $usuarioEliminar = User::find($request->usuarioEliminarId);
+            // Eliminar la imagen antigua si existe
+            if ($usuarioEliminar->foto_archivo) {
+                unlink(public_path('images/usuarios/' . $usuarioEliminar->foto_archivo));
+            }
             $usuarioEliminar->delete();
 
             $return = [
@@ -206,6 +243,29 @@ class registroUsuarioController extends Controller
                         'status' => 'error',
                         'titulo' => '¡Registro no completado!',
                         'message' => 'No se están enviando campos obligatorios: Las contraseñas no coinciden'
+                    ];
+                    return $return;
+                }
+            }
+
+            if ($request->file('imagen') != null && $request->file('imagen')->isValid()) {
+                $extension = $request->imagen->getClientOriginalExtension();
+                $extensionesPermitidas = ['jpg', 'jpeg', 'png'];
+                if (in_array(strtolower($extension), $extensionesPermitidas)) {
+                    $userId = $user->id;
+                    // Eliminar la imagen antigua si existe
+                    if ($user->foto_archivo) {
+                        unlink(public_path('images/usuarios/' . $user->foto_archivo));
+                    }
+                    $extension = strtolower($request->imagen->getClientOriginalExtension());
+                    $imageName = 'userImg_' . $userId . '.' . $extension;
+                    $request->imagen->move(public_path('images/usuarios'), $imageName);
+                    $user->foto_archivo = $imageName;
+                } else {
+                    $return = [
+                        'status' => 'error',
+                        'titulo' => '¡Extensión inválida!',
+                        'message' => '<strong>Solo se permiten imágenes con extensiones .jpg, .jpeg o .png</strong>'
                     ];
                     return $return;
                 }

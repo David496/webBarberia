@@ -41,6 +41,10 @@ $(function(){
                 "class": "text-center"
             },
             {
+                "data": "imagen",
+                "class": "text-center"
+            },
+            {
                 "data": "fechaCrea",
                 "class": "text-center"
             },
@@ -172,6 +176,12 @@ const editarProducto = (id) => {
         $('#unidad_edit_id').val(producto.unidad);
         $('#precio_edit_id').val(producto.precio_venta);
         $('#stock_edit_id').val(producto.stock);
+
+        if (producto.producto_imagen) {
+            $('#imagenSubida').html(producto.producto_imagen);
+        } else{
+            $('#imagenSubida').html('Imagen no encontrada');
+        }
     }).done(() => {
         modalActualiza.modal("show");
     })

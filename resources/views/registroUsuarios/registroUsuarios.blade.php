@@ -54,6 +54,7 @@
                             <th class="align-middle text-center">Rol</th>
                             <th class="align-middle text-center">Email</th>
                             <th class="align-middle text-center">Estado</th>
+                            <th class="align-middle text-center">Foto</th>
                             <th class="align-middle text-center">Fec. Crea.</th>
                             <th class="align-middle">Opciones</th>
                         </tr>
@@ -127,6 +128,10 @@
                     <div class="col-md-6">
                         <label for="password_rep_id" class="form-label">Repetir Contraseña <span class="text-danger">(*)</span></label>
                         {!! Form::password('password_rep', ['class' => 'form-control', 'autocomplete' => 'new-password', 'id' => 'password_rep_id', 'required']) !!}
+                    </div>
+                    <div class="col-md-12">
+                        <label for="imagen_id" class="form-label">Subir foto</label>
+                        <input class="form-control" type="file" id="imagen_id" accept="image/*" name="imagen">
                     </div>
                 </div>
             </div>
@@ -211,6 +216,11 @@
                         <label for="password_rep_edit_id" class="form-label">Repetir Contraseña <span class="text-danger">(*)</span></label>
                         {!! Form::password('password_rep', ['class' => 'form-control', 'autocomplete' => 'new-password', 'id' => 'password_rep_edit_id', 'required']) !!}
                     </div>
+                    <div class="col-md-12">
+                        <label for="imagen_edit_id" class="form-label">Subir foto</label>
+                        <input class="form-control" type="file" id="imagen_edit_id" accept="image/*" name="imagen">
+                        <span id="imagenSubida">No se encontró imagen</span>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -236,5 +246,5 @@
     @include('encabezados.js.sweetalert')
     <script src="{{ asset('assets/libs/moment/moment.js') }}"></script>
     <script src="{{ asset('assets/libs/moment/locale/es.js') }}"></script>
-    <script src="{{ asset('dist/js/registroUsuarios/registroUsuario.js') . '?version=1' }}"></script>
+    <script src="{{ asset('dist/js/registroUsuarios/registroUsuario.js') . '?version=2' }}"></script>
 @endsection

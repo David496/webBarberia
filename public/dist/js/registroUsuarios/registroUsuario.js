@@ -50,6 +50,10 @@ $(function(){
                 "class": "text-center"
             },
             {
+                "data": "foto",
+                "class": "text-center"
+            },
+            {
                 "data": "fechaCrea",
                 "class": "text-center"
             },
@@ -195,6 +199,11 @@ const editarUsuario = (id) => {
         $("#password_edit_id").prop("disabled", true).val('');
         $("#password_rep_edit_id").prop("disabled", true).val('');
         $("#cambiarPassCheckId").prop("checked", false);
+        if (usuario.foto_archivo) {
+            $('#imagenSubida').html(usuario.foto_archivo);
+        } else{
+            $('#imagenSubida').html('Imagen no encontrada');
+        }
     }).done(() => {
         modalActualiza.modal("show");
     })

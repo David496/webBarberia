@@ -75,9 +75,15 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <div class="float-end">
+                                            {{-- <div class="float-end">
                                                 @if (Route::has('password.request'))
                                                 <a href="{{ route('password.request') }}" class="text-muted">¿Olvidaste la
+                                                    contraseña?</a>
+                                                @endif
+                                            </div> --}}
+                                            <div class="float-end">
+                                                @if (Route::has('password.request'))
+                                                <a href="#" class="text-muted">¿Olvidaste la
                                                     contraseña?</a>
                                                 @endif
                                             </div>

@@ -143,8 +143,10 @@
                             <button type="button" class="btn shadow-none" id="page-header-user-dropdown"
                                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="d-flex align-items-center">
+                                    {{-- <img class="rounded-circle header-profile-user" id="id_fot_perf_header"
+                                        src="{{ asset('assets/images/users/user-admin.svg') }}" alt="Header Avatar"> --}}
                                     <img class="rounded-circle header-profile-user" id="id_fot_perf_header"
-                                        src="{{ asset('assets/images/users/user-admin.svg') }}" alt="Header Avatar">
+                                        src="{{ asset('images/usuarios/'.Auth::user()->foto_archivo) }}" alt="Header Avatar">
                                     <span class="text-start ms-xl-2">
                                         <span
                                             class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ Auth::user()->name }}</span>

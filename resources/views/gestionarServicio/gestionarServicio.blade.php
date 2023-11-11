@@ -54,6 +54,7 @@
                             <th class="all align-middle text-center">Servicio</th>
                             <th class="align-middle text-center">Precio</th>
                             <th class="align-middle text-center">Descripción</th>
+                            <th class="align-middle text-center">Imagen</th>
                             <th class="align-middle text-center">Fec. Crea.</th>
                             <th class="align-middle">Opciones</th>
                         </tr>
@@ -96,7 +97,7 @@
                     </div>
                     <div class="col-md-12">
                         <label for="imagen_id" class="form-label">Subir imagen</label>
-                        <input class="form-control" type="file" id="imagen_id" accept="application/xml" name="imagen" disabled>
+                        <input class="form-control" type="file" id="imagen_id" accept="image/*" name="imagen">
                     </div>
                 </div>
             </div>
@@ -142,8 +143,9 @@
                         ]) !!}
                     </div>
                     <div class="col-md-12">
-                        <label for="imagen_id" class="form-label">Subir imagen</label>
-                        <input class="form-control" type="file" id="imagen_id" accept="application/xml" name="imagen" disabled>
+                        <label for="imagen_edit_id" class="form-label">Subir imagen</label>
+                        <input class="form-control" type="file" id="imagen_edit_id" accept="image/*" name="imagen">
+                        <span id="imagenSubida">No se encontró imagen</span>
                     </div>
                 </div>
             </div>
@@ -170,5 +172,5 @@
     @include('encabezados.js.sweetalert')
     <script src="{{ asset('assets/libs/moment/moment.js') }}"></script>
     <script src="{{ asset('assets/libs/moment/locale/es.js') }}"></script>
-    <script src="{{ asset('dist/js/gestionarServicio/gestionarServicio.js') . '?version=1' }}"></script>
+    <script src="{{ asset('dist/js/gestionarServicio/gestionarServicio.js') . '?version=2' }}"></script>
 @endsection

@@ -37,6 +37,15 @@ class registroServicioController extends Controller
                 $descripcion = $row->descripcion;
                 return '<span class="badge badge-outline-primary text-wrap" style="width: 20rem;"><strong>' . $descripcion . ' </strong></span>';
             })
+            ->addColumn('imagen', function ($row) {
+                if ($row->servicio_imagen){
+                    $nombre = $row->servicio_imagen;
+                    $rutaCompleta = 'images/servicios/'.$nombre;
+                    return '<img src="' . asset($rutaCompleta) . '" alt="'.$row->nombre_servicio.'" class="img-fluid img-thumbnail" width="60px" id="img_id">';
+                } else {
+                    return '<span class="badge bg-light text-dark text-wrap text-left " id="img_id"> <i class="bx bx-x-circle text-danger"></i><strong>No Registra</strong></span>';
+                }
+            })
             ->addColumn('fechaCrea', function ($row) {
                 $fechaCreacion = '-';
                 $fecha = $row->fecha_creacion;
@@ -51,12 +60,28 @@ class registroServicioController extends Controller
                 <i class="las la-trash-alt"></i>
                 </button>';
             })
-            ->rawColumns(['servicio', 'precio', 'descripcion', 'fechaCrea', 'options'])
+            ->rawColumns(['servicio', 'precio', 'descripcion', 'fechaCrea', 'options','imagen'])
             ->toJson();
     }
 
     public function agregarServicio(Request $request){
         try {
+
+            if ($request->file('imagen') != null && $request->file('imagen')->isValid()) {
+                $extension = $request->imagen->getClientOriginalExtension();
+                $extensionesPermitidas = ['jpg', 'jpeg', 'png'];
+                if (in_array(strtolower($extension), $extensionesPermitidas)) {
+                    // La extensión es válida, puedes continuar con el código para procesar el archivo.
+                } else {
+                    $return = [
+                        'status' => 'error',
+                        'titulo' => '¡Extensión inválida!',
+                        'message' => '<strong>Solo se permiten imágenes con extensiones .jpg, .jpeg o .png</strong>'
+                    ];
+                    return $return;
+                }
+            }
+
             $servicio = new Servicio();
             $servicio->nombre_servicio = $request->nombreServicio;
             $servicio->descripcion = $request->descripcion;
@@ -77,6 +102,15 @@ class registroServicioController extends Controller
                     'message' => 'Obtenemos el siguiente error: ' . $msg . '<br /><strong>NO se ha realizado ningún cambio en la base de datos!</strong>'
                 ];
                 return $return;
+            }
+
+            if ($request->file('imagen') != null && $request->file('imagen')->isValid()) {
+                $servicioId = $servicio->id;
+                $extension = strtolower($request->imagen->getClientOriginalExtension());
+                $imageName = 'serviceImg_' . $servicioId . '.' . $extension;
+                $request->imagen->move(public_path('images/servicios'), $imageName);
+                $servicio->servicio_imagen = $imageName;
+                $servicio->save();
             }
 
             $return = [
@@ -105,6 +139,30 @@ class registroServicioController extends Controller
     public function editarServicio(Request $request){
         try {
             $servicio = Servicio::find($request->getServicioId);
+
+            if ($request->file('imagen') != null && $request->file('imagen')->isValid()) {
+                $extension = $request->imagen->getClientOriginalExtension();
+                $extensionesPermitidas = ['jpg', 'jpeg', 'png'];
+                if (in_array(strtolower($extension), $extensionesPermitidas)) {
+                    $productId = $servicio->id;
+                    // Eliminar la imagen antigua si existe
+                    if ($servicio->servicio_imagen) {
+                        unlink(public_path('images/servicios/' . $servicio->servicio_imagen));
+                    }
+                    $extension = strtolower($request->imagen->getClientOriginalExtension());
+                    $imageName = 'serviceImg_' . $productId . '.' . $extension;
+                    $request->imagen->move(public_path('images/servicios'), $imageName);
+                    $servicio->servicio_imagen = $imageName;
+                } else {
+                    $return = [
+                        'status' => 'error',
+                        'titulo' => '¡Extensión inválida!',
+                        'message' => '<strong>Solo se permiten imágenes con extensiones .jpg, .jpeg o .png</strong>'
+                    ];
+                    return $return;
+                }
+            }
+
             $servicio->nombre_servicio = $request->nombreServicio;
             $servicio->descripcion = $request->descripcion;
             $servicio->precio_venta = $request->precio;
@@ -145,6 +203,10 @@ class registroServicioController extends Controller
     public function eliminarServicio(Request $request){
         try {
             $servicio = Servicio::find($request->servicioEliminarId);
+            // Eliminar la imagen antigua si existe
+            if ($servicio->servicio_imagen) {
+                unlink(public_path('images/servicios/' . $servicio->servicio_imagen));
+            }
             $servicio->delete();
 
             $return = [

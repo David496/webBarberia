@@ -33,6 +33,10 @@ $(function(){
                 "class": "text-center"
             },
             {
+                "data": "imagen",
+                "class": "text-center"
+            },
+            {
                 "data": "fechaCrea",
                 "class": "text-center"
             },
@@ -162,6 +166,12 @@ const editarServicio = (id) => {
         $('#nombreServicio_edit_id').val(servicio.nombre_servicio);
         $('#descripcion_edit_id').val(servicio.descripcion);
         $('#precio_edit_id').val(servicio.precio_venta);
+
+        if (servicio.servicio_imagen) {
+            $('#imagenSubida').html(servicio.servicio_imagen);
+        } else{
+            $('#imagenSubida').html('Imagen no encontrada');
+        }
     }).done(() => {
         modalActualiza.modal("show");
     })

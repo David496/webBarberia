@@ -14,7 +14,7 @@
                 <ol class="breadcrumb my-0">
                     <li class="breadcrumb-item"><a href="javascript: void(0);">SWGRVB</a>
                     </li>
-                    <li class="breadcrumb-item active">Configuracón de Empresa</li>
+                    <li class="breadcrumb-item active">Configuración de Empresa</li>
                 </ol>
             </div>
         </div>
@@ -29,6 +29,13 @@
             </div>
             {!! Form::open(['route' => ['configuracionEmpresa.actualizarEmpresa'], 'id' => 'formActualizarEmpresaId']) !!}
             <div class="card-body">
+                <div class="row g-3 justify-content-center align-items-center text-center">
+                    <div class="col">
+                        <h5>Logo</h5>
+                        <img src="{{ asset('images/empresa/'.($empresa->empresa_logo ?? 'default_logo.jpg')) }}" alt="logo empresa" class="img-thumbnail" style="width: 300px; height: 300px;" id="img_id">
+                    </div>
+                </div>
+                <br>
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label for="razonSocial_id" class="form-label">Razón Social</label>
@@ -72,6 +79,11 @@
                         <select name="distrito" class="form-select select2Agregar" style="width: 100%;" id="distrito_id">
                             <option value="" selected>[ SELECCIONE DISTRITO]</option>
                         </select>
+                    </div>
+                    <div class="col-md-12">
+                        <label for="imagen_edit_id" class="form-label">Subir logo</label>
+                        <input class="form-control" type="file" id="imagen_edit_id" accept="image/*" name="imagen">
+                        <span id="imagenSubida"><span class="fw-bold">{{ isset($empresa->empresa_logo) ? $empresa->empresa_logo : 'No se encontró logo registrado' }}</span></span>
                     </div>
                 </div>
             </div>

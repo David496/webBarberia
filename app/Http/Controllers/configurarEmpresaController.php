@@ -65,6 +65,31 @@ class configurarEmpresaController extends Controller
     public function actualizarEmpresa(Request $request){
         try {
             $empresa = Empresa::first();
+
+            if ($request->file('imagen') != null && $request->file('imagen')->isValid()) {
+                $extension = $request->imagen->getClientOriginalExtension();
+                $extensionesPermitidas = ['jpg', 'jpeg', 'png'];
+                if (in_array(strtolower($extension), $extensionesPermitidas)) {
+                    $empresaId = $empresa->id;
+                    // Eliminar la imagen antigua si existe
+                    if ($empresa->empresa_logo) {
+                        unlink(public_path('images/empresa/' . $empresa->empresa_logo));
+                    }
+                    $extension = strtolower($request->imagen->getClientOriginalExtension());
+                    $imageName = 'empresaImg_' . $empresaId . '.' . $extension;
+                    $request->imagen->move(public_path('images/empresa'), $imageName);
+                    $empresa->empresa_logo = $imageName;
+                } else {
+                    $return = [
+                        'status' => 'error',
+                        'titulo' => '¡Extensión inválida!',
+                        'message' => '<strong>Solo se permiten imágenes con extensiones .jpg, .jpeg o .png</strong>'
+                    ];
+                    return $return;
+                }
+            }
+
+
             $empresa->razon_social = $request->razonSocial;
             $empresa->nombre_corto = $request->nombreCorto;
             $empresa->direccion = $request->direccion;
