@@ -18,4 +18,14 @@ class Cliente extends Model
     {
         return $this->clienteID;
     }
+
+    public function getFullNameAttribute()
+    {
+        return $this->nombres . ' ' . $this->apellidoP . ' ' . $this->apellidoM;
+    }
+
+    public function reservas()
+    {
+        return $this->hasMany('App\Models\Reserva', 'clienteID');
+    }
 }

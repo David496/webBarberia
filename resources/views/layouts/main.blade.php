@@ -208,6 +208,7 @@
                     <div id="two-column-menu">
                     </div>
                     <ul class="navbar-nav" id="navbar-nav">
+                        @if (Auth::user()->tipo_usuario == 'Administrador')
                         <li class="menu-title"><span data-key="t-menu">ADMINISTRACION</span></li>
                         <li class="nav-item">
                             <a class="nav-link menu-link" href="{{ route('home') }}">
@@ -246,7 +247,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="javascript:void(0);">
+                            <a class="nav-link menu-link" href="{{ route('reservas.registroReservaVista')}}">
                                 <i class="las la-book"></i> <span data-key="t-widgets">Registro Reservas</span>
                             </a>
                         </li>
@@ -265,6 +266,19 @@
                                 <i class="las la-tools"></i> <span data-key="t-widgets">Configuracion Empresa</span>
                             </a>
                         </li>
+                        @else
+                        <li class="menu-title"><span data-key="t-menu">EMPLEADO</span></li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="javascript:void(0);">
+                                <i class="las la-file-invoice-dollar"></i> <span data-key="t-widgets">Registro Ventas</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link menu-link" href="{{ route('reservas.registroReservaVista')}}">
+                                <i class="las la-book"></i> <span data-key="t-widgets">Registro Reservas</span>
+                            </a>
+                        </li>
+                        @endif
                     </ul>
                 </div>
 

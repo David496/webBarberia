@@ -58,3 +58,12 @@ Route::post('/registroProductos/productoServicios/agregarProducto', 'registroPro
 Route::get('/registroProductos/productoServicios/getProducto/{id}', 'registroProductoController@getProducto')->name('productos.getProducto');
 Route::post('/registroProductos/productoServicios/editarProducto', 'registroProductoController@editarProducto')->name('productos.editarProducto');
 Route::post('/registroProductos/productoServicios/eliminarProducto', 'registroProductoController@eliminarProducto')->name('productos.eliminarProducto');
+
+//GESTIONAR RESERVAS
+Route::get('/registroReservas/reservas', 'registroReservaController@registroReservaVista')->name('reservas.registroReservaVista');
+Route::get('/registroReservas/tablaProducto', 'registroReservaController@tablaReservas')->name('reservas.tablaReservas');
+Route::post('/registroReservas/agregarReserva', 'registroReservaController@agregarReserva')->name('reservas.agregarReserva');
+Route::get('/registroReservas/getReserva/{id}', 'registroReservaController@getReserva')->name('reservas.getReserva');
+Route::post('/registroReservas/editarReserva', 'registroReservaController@editarReserva')->name('reservas.editarReserva');
+Route::post('/registroReservas/eliminarReserva', 'registroReservaController@eliminarReserva')->name('reservas.eliminarReserva');
+Route::post('/registroReservas/actualizaEstado', 'registroReservaController@actualizaEstado')->name('reservas.actualizaEstado');
