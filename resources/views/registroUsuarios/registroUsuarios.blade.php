@@ -3,6 +3,11 @@
 @section('styles')
     @include('encabezados.css.datatable')
     @include('encabezados.css.sweetalert')
+    <!-- icheck material -->
+    <link href="{{ asset('assets/libs/icheck-material/icheck-material.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <!-- icheck bootstrap -->
+    <link href="{{ asset('assets/libs/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
 
@@ -53,9 +58,9 @@
                             <th class="align-middle text-center">N° Doc.</th>
                             <th class="align-middle text-center">Rol</th>
                             <th class="align-middle text-center">Email</th>
-                            <th class="align-middle text-center">Estado</th>
                             <th class="align-middle text-center">Foto</th>
                             <th class="align-middle text-center">Fec. Crea.</th>
+                            <th class="align-middle text-center">Estado</th>
                             <th class="align-middle">Opciones</th>
                         </tr>
                     </thead>
@@ -232,6 +237,28 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<!--  Actualizar Estado -->
+<div class="modal fade fadeInUp" id="modalActualizarEstadoId" tabindex="-1" role="dialog" aria-labelledby="modalLabelAgregar" aria-hidden="true">
+    <div class="modal-dialog modal-sm ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabelAgregar">Actualizar Estado del Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <div id="estadosContainer">
+                    </div>
+                </div>
+                <br>
+                <div id="mensajeGuardadoId">
+                </div>
+            </div>
+            {!! Form::close() !!}
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 {{-- Obtener Usuario --}}
 {!! Form::open(['route' => ['registroUsuarios.getUsuario', 0], 'id' => 'formGetUsuarioId']) !!}
 {!! Form::close() !!}
@@ -240,11 +267,17 @@
 {!! Form::open(['route' => ['registroUsuarios.eliminarUsuario'], 'id' => 'formEliminarUsuarioId']) !!}
 <input type="hidden" name="usuarioEliminarId" id="usuarioEliminarId" />
 {!! Form::close() !!}
+
+{{-- Guardar estado --}}
+{!! Form::open(['route' => ['registroUsuarios.actualizarEstadoUsuario'], 'id' => 'formActualizarEstadoId']) !!}
+<input type="hidden" name="idUser" id="idUser">
+<input type="hidden" name="valoEstado" id="valoEstado">
+{!! Form::close() !!}
 @endsection
 @section('scripts')
     @include('encabezados.js.datatable')
     @include('encabezados.js.sweetalert')
     <script src="{{ asset('assets/libs/moment/moment.js') }}"></script>
     <script src="{{ asset('assets/libs/moment/locale/es.js') }}"></script>
-    <script src="{{ asset('dist/js/registroUsuarios/registroUsuario.js') . '?version=2' }}"></script>
+    <script src="{{ asset('dist/js/registroUsuarios/registroUsuario.js') . '?version=3' }}"></script>
 @endsection

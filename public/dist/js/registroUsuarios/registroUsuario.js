@@ -46,15 +46,15 @@ $(function(){
                 "class": "text-center"
             },
             {
-                "data": "estado",
-                "class": "text-center"
-            },
-            {
                 "data": "foto",
                 "class": "text-center"
             },
             {
                 "data": "fechaCrea",
+                "class": "text-center"
+            },
+            {
+                "data": "estado",
                 "class": "text-center"
             },
             {
@@ -395,3 +395,85 @@ const eliminarUsuario = (id) => {
         })
 }
 
+
+const cambioEstado = (id) => {
+    let modalEstado = $('#modalActualizarEstadoId')
+    $("#estadosContainer").empty();
+    $('#mensajeGuardadoId').empty();
+    let formGet = $('#formGetUsuarioId');
+    let urlGet = formGet.attr('action');
+    let urlGetWithId = urlGet.slice(0,-1) + id;
+
+    $.get(urlGetWithId, (response) => {
+        let {estados,usuario} = response;
+        estados.forEach(function (row) {
+            let valChecked = '';
+            if (row.name === usuario.estado) {
+                valChecked = 'checked';
+            }
+            let html = `
+            <div class="icheck-primary">
+                <input type="radio" id="cal_${row.id}" onclick="guardarEstado('${row.name}', ${id})" value="${row.name}" name="name" ${valChecked} />
+                <label class="fw-bold text-uppercase fs-20" for="cal_${row.id}"><span class="badge bg-${row.color}">${row.name}</span></label>
+            </div>
+            `;
+            $("#estadosContainer").append(html);
+        });
+    }).done(() => {
+        modalEstado.modal("show");
+    })
+}
+
+
+let timeout = null;
+const guardarEstado = (estado, usuarioId) => {
+    $("#idUser").val(usuarioId);
+    $("#valoEstado").val(estado);
+
+    //obteniendo la url
+    const form = $("#formActualizarEstadoId");
+    const urlForm = form.attr('action');
+    const dataform = form.serialize();
+    let html = `<div class="alert alert-dark mb-0" role="alert">
+                    <i class="ri-refresh-line me-3  align-middle fs-16" animated-icon></i>
+                    Guardando...
+                </div>
+                `;
+    $("#mensajeGuardadoId").html(html);
+
+    clearTimeout(timeout); // this will clear the recursive unneccessary calls
+    timeout = setTimeout(() => {
+        $.ajax({
+            url: urlForm,
+            type: "POST",
+            data: dataform,
+        }).then((data) => {
+            if (data.status === 'ok') {
+                mostrarMensajeExito('Guardado automaticamente');
+                $('#tablaUsuariosId').DataTable().ajax.reload(null, false);
+            } else {
+                mostrarMensajeError('Error al guardar');
+            }
+        }, (reason) => {
+            mostrarMensajeError('Error de red');
+        });
+    }, 200);
+}
+
+function mostrarMensajeExito(mensaje) {
+    let html = `<div class="alert alert-success" role="alert">
+                    <i class="ri-check-double-line me-3 align-middle fs-16 text-success"></i>
+                    ${mensaje}
+                </div>
+                `;
+    $("#mensajeGuardadoId").html(html);
+}
+
+function mostrarMensajeError(mensaje) {
+    let html = `<div class="alert alert-danger" role="alert">
+                    <i class="ri-error-warning-line me-3 align-middle fs-16 text-danger "></i>
+                    ${mensaje}
+                </div>
+                `;
+    $("#mensajeGuardadoId").html(html);
+}

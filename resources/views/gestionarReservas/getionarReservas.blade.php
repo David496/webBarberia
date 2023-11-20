@@ -3,13 +3,19 @@
 @section('styles')
     @include('encabezados.css.datatable')
     @include('encabezados.css.sweetalert')
+
+    <!-- icheck material -->
+    <link href="{{ asset('assets/libs/icheck-material/icheck-material.min.css') }}" rel="stylesheet" type="text/css" />
+
+    <!-- icheck bootstrap -->
+    <link href="{{ asset('assets/libs/icheck-bootstrap/icheck-bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
 @endsection
 @section('content')
 
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="mb-sm-0"><i class="las la-book text-warning"></i> RESERVAS REGISTRADAS</h4>
+            <h4 class="mb-sm-0"><i class="las la-book text-warning"></i> REGISTRO DE RESERVAS</h4>
 
             <div class="page-title-right">
                 <ol class="breadcrumb my-0">
@@ -217,23 +223,18 @@
 <div class="modal fade fadeInUp" id="modalActualizarEstadoId" tabindex="-1" role="dialog" aria-labelledby="modalLabelAgregar" aria-hidden="true">
     <div class="modal-dialog modal-sm ">
         <div class="modal-content">
-            {!! Form::open(['route' => ['reservas.actualizaEstado'], 'id' => 'formActualizarEstadoId']) !!}
             <div class="modal-header">
                 <h5 class="modal-title" id="modalLabelAgregar">Actualizar Estado de Reserva</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <div class="row g-3">
-                    <input type="hidden" name="getRId" id="getRId" />
-                    <div class="col-md-12">
-                        <label for="estado_id" class="form-label">Estado</label>
-                        {!! Form::select('estado', $data['estadoReserva'], null, ['class' => 'form-select select4', 'style' => 'width:100%', 'id' => 'estado_id']) !!}
+                    <div id="estadosContainer">
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <a href="javascript:void(0);" class="btn btn-light waves-effect fw-medium" data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i> Cerrar</a>
-                <button type="submit" class="btn btn-success waves-effect">Actualizar</button>
+                <br>
+                <div id="mensajeGuardadoId">
+                </div>
             </div>
             {!! Form::close() !!}
         </div><!-- /.modal-content -->
@@ -249,11 +250,19 @@
 {!! Form::open(['route' => ['reservas.eliminarReserva'], 'id' => 'formEliminarReservaId']) !!}
 <input type="hidden" name="reservaEliminarId" id="reservaEliminarId" />
 {!! Form::close() !!}
+
+{{-- Guardar estado --}}
+{!! Form::open(['route' => ['reservas.actualizaEstado'], 'id' => 'formActualizarEstadoId']) !!}
+<input type="hidden" name="idReserva" id="idReserva">
+<input type="hidden" name="valoEstado" id="valoEstado">
+{!! Form::close() !!}
+
+
 @endsection
 @section('scripts')
     @include('encabezados.js.datatable')
     @include('encabezados.js.sweetalert')
     <script src="{{ asset('assets/libs/moment/moment.js') }}"></script>
     <script src="{{ asset('assets/libs/moment/locale/es.js') }}"></script>
-    <script src="{{ asset('dist/js/gestionarReserva/gestionarReserva.js') . '?version=1' }}"></script>
+    <script src="{{ asset('dist/js/gestionarReserva/gestionarReserva.js') . '?version=2' }}"></script>
 @endsection

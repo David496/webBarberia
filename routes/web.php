@@ -28,6 +28,7 @@ Route::post('/registroUsuarios/agregarUsuario', 'registroUsuarioController@agreg
 Route::get('/registroUsuarios/getUsuario/{id}', 'registroUsuarioController@getUsuario')->name('registroUsuarios.getUsuario');
 Route::post('/registroUsuarios/editarUsuario', 'registroUsuarioController@editarUsuario')->name('registroUsuarios.editarUsuario');
 Route::post('/registroUsuarios/eliminarUsuario', 'registroUsuarioController@eliminarUsuario')->name('registroUsuarios.eliminarUsuario');
+Route::post('/registroUsuarios/actualizarEstadoUsuario', 'registroUsuarioController@actualizarEstadoUsuario')->name('registroUsuarios.actualizarEstadoUsuario');
 
 //GESTIONAR EMPRESA
 Route::get('/ConfigurarEmpresa', 'configurarEmpresaController@configurarEmpresaVista')->name('configuracionEmpresa.configurarEmpresaVista');

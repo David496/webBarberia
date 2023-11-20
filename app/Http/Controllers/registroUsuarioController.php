@@ -61,20 +61,6 @@ class registroUsuarioController extends Controller
                 $email = $row->email;
                 return '<span class="text-left">' . $email . ' </span>';
             })
-            ->addColumn('estado', function ($row) {
-                $estado = "-";
-                if ($row->estado){
-                    $estado = $row->estado;
-                }
-
-                if ($estado == "Activo") {
-                    return '<span class="badge text-uppercase badge-outline-success">' . $estado . ' </span>';
-                } elseif ($estado == "Inactivo") {
-                    return '<span class="badge text-uppercase badge-outline-danger">' . $estado . ' </span>';
-                } else {
-                    return '<span class="text-left text-uppercase">' . $estado . ' </span>';
-                }
-            })
             ->addColumn('foto', function ($row) {
                 if ($row->foto_archivo){
                     $nombre = $row->foto_archivo;
@@ -90,12 +76,25 @@ class registroUsuarioController extends Controller
                 $fechaCancelacion = Carbon::parse($fecha)->format('d/m/Y');
                 return '<span class="badge bg-light text-dark text-wrap text-left "> <i class="bx bx-calendar text-success"></i><strong>' . $fechaCancelacion . '</strong></span></td>';
             })
+            ->addColumn('estado', function ($row) {
+                $reserva = $row->estado;
+                $estadosColores = [
+                    'Activo' => 'success',
+                    'Inactivo' => 'danger',
+                ];
+                $color = $estadosColores[$reserva] ?? 'light';
+
+                return '<span class="badge bg-'.$color.'">' . $reserva . '</span>';
+            })
             ->addColumn('options', function ($row) {
                 $disabled = '';
                 if ($row->id === 1) {
                     $disabled =  'disabled';
                 }
-                return '<button data-toggle="tooltip" data-placement="auto" title="Editar" onclick="editarUsuario(' . $row->id . ')" class="btn px-2 py-0 btn-lg waves-effect waves-light btn-info">
+                return '<button data-toggle="tooltip" data-placement="auto" title="Actualizar Estado" onclick="cambioEstado(' . $row->id . ')" class="btn px-2 py-0 btn-lg waves-effect waves-light btn-primary" '.$disabled.'>
+                <i class="las la-stream"></i>
+                </button>
+                <button data-toggle="tooltip" data-placement="auto" title="Editar" onclick="editarUsuario(' . $row->id . ')" class="btn px-2 py-0 btn-lg waves-effect waves-light btn-info">
                 <i class="las la-edit"></i>
                 </button>
                 <button data-toggle="tooltip" data-placement="auto" title="Eliminar" onclick="eliminarUsuario(' . $row->id . ')" class="btn px-2 py-0 btn-lg waves-effect waves-light btn-danger" '.$disabled.'>
@@ -220,6 +219,12 @@ class registroUsuarioController extends Controller
     public function getUsuario($id)
     {
         $usuario = User::find($id);
+        $estados = [
+            ['id' => 'Activo', 'name' => 'Activo', 'color' => 'success'],
+            ['id' => 'Inactivo', 'name' => 'Inactivo', 'color' => 'danger']
+        ];
+
+        $data['estados'] = $estados;
         $data['usuario'] = $usuario;
         return response()->json($data);
     }
@@ -291,6 +296,44 @@ class registroUsuarioController extends Controller
                 'status' => 'ok',
                 'titulo' => '¡Registro Exitoso!',
                 'message' => 'Se registró correctamente el usuario!'
+            ];
+            return $return;
+        } catch (Exception $ex) {
+            $return = [
+                'status' => 'error',
+                'titulo' => '¡Registro no completado!',
+                'message' => $ex->getMessage()
+            ];
+            return $return;
+        }
+    }
+
+    public function actualizarEstadoUsuario(Request $request){
+        try {
+            $usuario = User::find($request->idUser);
+            $usuario->estado = $request->valoEstado;
+
+            if (!$usuario->save()) {
+                $msg = '';
+                if ($this->ENVIRONMENT_DEBUG) {
+                    foreach ($usuario->getMessages() as $message) {
+                        $msg = $msg . $message . "</br>\n";
+                    }
+                } else {
+                    $msg = "No se pudo Actualizar el estado. </br>\n";
+                }
+                $return = [
+                    'status' => 'error',
+                    'titulo' => '¡Registro no completado!',
+                    'message' => 'Obtenemos el siguiente error: ' . $msg . '<br /><strong>NO se ha realizado ningún cambio en la base de datos!</strong>'
+                ];
+                return $return;
+            }
+
+            $return = [
+                'status' => 'ok',
+                'titulo' => '¡Registro Exitoso!',
+                'message' => 'Se registró correctamente el estado!'
             ];
             return $return;
         } catch (Exception $ex) {

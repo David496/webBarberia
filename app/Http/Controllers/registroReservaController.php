@@ -24,7 +24,7 @@ class registroReservaController extends Controller
         $clienteSelect = Cliente::all()->pluck('fullname', 'clienteID');
         $clienteSelect->prepend('[ SELECCIONE CLIENTE ]', '');
 
-        $empleadoSelect = User::where('tipo_usuario', 'Empleado')
+        $empleadoSelect = User::where('tipo_usuario', 'Empleado')->where('estado', 'Activo')
             ->selectRaw("concat(name,' ',apellidosP,' ',apellidosM) as name, id")
             ->pluck('name', 'id');
         $empleadoSelect->prepend('[ SELECCIONE EMPLEADO ]', '');
@@ -167,6 +167,15 @@ class registroReservaController extends Controller
     public function getReserva($id)
     {
         $reserva = Reserva::find($id);
+
+        $estados = [
+            ['id' => 'PENDIENTE', 'name' => 'PENDIENTE', 'color' => 'warning'],
+            ['id' => 'EN CURSO', 'name' => 'EN CURSO', 'color' => 'success'],
+            ['id' => 'TERMINADO', 'name' => 'TERMINADO', 'color' => 'dark'],
+            ['id' => 'CANCELADO', 'name' => 'CANCELADO', 'color' => 'danger']
+        ];
+
+        $data['estados'] = $estados;
         $data['reserva'] = $reserva;
         return response()->json($data);
     }
@@ -238,8 +247,8 @@ class registroReservaController extends Controller
 
     public function actualizaEstado(Request $request){
         try {
-            $reserva = Reserva::find($request->getRId);
-            $reserva->estado = $request->estado;
+            $reserva = Reserva::find($request->idReserva);
+            $reserva->estado = $request->valoEstado;
 
             if (!$reserva->save()) {
                 $msg = '';
