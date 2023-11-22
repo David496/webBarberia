@@ -61,7 +61,10 @@ class registroProductoController extends Controller
                 return '<span class="badge bg-light text-dark text-wrap text-left "> <i class="bx bx-calendar text-success"></i><strong>' . $fechaCreacion . '</strong></span></td>';
             })
             ->addColumn('options', function ($row) {
-                return '<button data-toggle="tooltip" data-placement="auto" title="Editar" onclick="editarProducto(' . $row->id . ')" class="btn px-2 py-0 btn-lg waves-effect waves-light btn-info">
+                return '<button data-toggle="tooltip" data-placement="auto" title="Aumentar Stock" onclick="aumentarStock(' . $row->id . ')" class="btn px-2 py-0 btn-lg waves-effect waves-light btn-dark">
+                <i class="las la-plus-square"></i>
+                </button>
+                <button data-toggle="tooltip" data-placement="auto" title="Editar" onclick="editarProducto(' . $row->id . ')" class="btn px-2 py-0 btn-lg waves-effect waves-light btn-info">
                 <i class="las la-edit"></i>
                 </button>
                 <button data-toggle="tooltip" data-placement="auto" title="Eliminar" onclick="eliminarProducto(' . $row->id . ')" class="btn px-2 py-0 btn-lg waves-effect waves-light btn-danger ">
@@ -226,6 +229,37 @@ class registroProductoController extends Controller
                 'status' => 'ok',
                 'titulo' => '¡Eliminación Exitosa!',
                 'message' => 'Se eliminó correctamente el producto!'
+            ];
+            return $return;
+        } catch (Exception $ex) {
+            $return = [
+                'status' => 'error',
+                'titulo' => '¡Registro no completado!',
+                'message' => $ex->getMessage()
+            ];
+            return $return;
+        }
+    }
+
+    public function aumentarStock(Request $request){
+        try {
+            if (!isset($request->stockMas)) {
+                $return = [
+                    'status' => 'error',
+                    'titulo' => '¡Extensión inválida!',
+                    'message' => '<strong>Ingrese un numero para aumentar el stock del producto</strong>'
+                ];
+                return $return;
+            }
+
+            $producto = Producto::find($request->getProductId);
+            $producto->stock += $request->stockMas;
+            $producto->save();
+
+            $return = [
+                'status' => 'ok',
+                'titulo' => '¡Registro Exitoso!',
+                'message' => 'Se aumentó el stock correctamente!'
             ];
             return $return;
         } catch (Exception $ex) {

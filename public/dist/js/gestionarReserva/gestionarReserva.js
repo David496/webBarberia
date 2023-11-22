@@ -85,10 +85,24 @@ $(function(){
         let value = $(this).val();
         filtroTablaEstado(value);
     });
+
+    flatpickr("#filterFechaId", {
+        dateFormat: "d/m/Y",// Formato de fecha deseado
+        onChange: function(selectedDates, dateStr, instance) {
+            // Filtrar la tabla cuando la fecha cambie
+            filtroTablaFecha(dateStr);
+        }
+    });
 });
 
 const filtroTablaEstado = (val) => {
     $('#tablaReservaId').DataTable().column(7).search(
+        val,
+    ).draw();
+}
+
+const filtroTablaFecha = (val) => {
+    $('#tablaReservaId').DataTable().column(4).search(
         val,
     ).draw();
 }
@@ -299,7 +313,7 @@ const editarReserva = (id) => {
                     showCloseButton: !0,
                     background: "#fff url(" + ruta_principal_main + "assets/images/chat-bg-pattern.png)",
                 }).then(() => {
-                    $('#tablaReservaId').DataTable().ajax.reload();
+                    $('#tablaReservaId').DataTable().ajax.reload(null, false);
                     modalActualiza.modal("hide");
                     clearForm('formEditarReservaId',['cliente_edit_id','empleado_edit_id']);
                 });
@@ -388,7 +402,7 @@ const eliminarReserva = (id) => {
                     showCloseButton: !0,
                     background: "#fff url(" + ruta_principal_main + "assets/images/chat-bg-pattern.png)",
                 }).then(() => {
-                    $('#tablaReservaId').DataTable().ajax.reload();
+                    $('#tablaReservaId').DataTable().ajax.reload(null, false);
                 });
             }
         })

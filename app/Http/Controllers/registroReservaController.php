@@ -53,10 +53,7 @@ class registroReservaController extends Controller
 
     public function tablaReservas()
     {
-        // $reserva = Reserva::get();
-        $fechaActual = Carbon::now();
-        $reserva = Reserva::orderByRaw('fecha_reserva = ? desc, fecha_reserva asc', [$fechaActual])
-            ->get();
+        $reserva = Reserva::orderBy('fecha_reserva','desc')->get();
 
         return DataTables::of($reserva)
             ->addIndexColumn()

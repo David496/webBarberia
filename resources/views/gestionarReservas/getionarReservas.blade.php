@@ -57,6 +57,17 @@
                         <span class="h6 text-dark mb-1">Seleccionar Estado</span>
                         {!! Form::select('filterEstado', $data['estado'], null, ['class' => 'selectFilter', 'style' => 'width:100%', 'id' => 'filterEstadoId']) !!}
                     </div>
+                    <div class="col-md-3 mb-2">
+                        <span class="h6 text-dark mb-1">Seleccionar Fecha</span>
+                        {!! Form::text('fecha', '', [
+                            'class' => 'form-control ',
+                            'data-provider' => 'flatpickr',
+                            'data-date-format' => 'd/m/Y',
+                            'data-locale' => 'es',
+                            'placeholder' => 'dd/mm/aaaa',
+                            'id' => 'filterFechaId',
+                        ]) !!}
+                    </div>
                 </div>
                 <table id="tablaReservaId" class="table dt-responsive table-bordered table-sm table-hover align-middle">
                     <thead class="font-weight-bold bg-light">
@@ -264,5 +275,5 @@
     @include('encabezados.js.sweetalert')
     <script src="{{ asset('assets/libs/moment/moment.js') }}"></script>
     <script src="{{ asset('assets/libs/moment/locale/es.js') }}"></script>
-    <script src="{{ asset('dist/js/gestionarReserva/gestionarReserva.js') . '?version=2' }}"></script>
+    <script src="{{ asset('dist/js/gestionarReserva/gestionarReserva.js') . '?version=3' }}"></script>
 @endsection

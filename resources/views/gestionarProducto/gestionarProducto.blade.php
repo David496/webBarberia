@@ -181,7 +181,54 @@
             </div>
             <div class="modal-footer">
                 <a href="javascript:void(0);" class="btn btn-light waves-effect fw-medium" data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i> Cerrar</a>
-                <button type="submit" class="btn btn-success waves-effect">Editar Usuario</button>
+                <button type="submit" class="btn btn-success waves-effect">Editar Servicio</button>
+            </div>
+            {!! Form::close() !!}
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+<!--  Modal aumentar stock-->
+<div class="modal fade fadeInUp" id="modalAumentarStockId" tabindex="-1" role="dialog" aria-labelledby="modalLabelEditar" aria-hidden="true">
+    <div class="modal-dialog modal-sm ">
+        <div class="modal-content">
+            {!! Form::open(['route' => ['productos.aumentarStock'], 'id' => 'formAumentarStockId']) !!}
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabelAgregar">Aumentar Stock</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row g-3">
+                    <input type="hidden" name="getProductId" id="getProductId" />
+                    <div class="col-md-12">
+                        <label for="nombreProducto_info_id" class="form-label">Nombre Producto</label>
+                        {!! Form::text('nombreProducto', '', ['class' => 'form-control', 'placeholder' => 'Nombres Producto', 'id' => 'nombreProducto_info_id', 'readonly',]) !!}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="stock_actual_id" class="form-label">Stock Actual</label>
+                        {!! Form::number('stockActual', '', [
+                            'class' => 'form-control ',
+                            'placeholder' => 'stock',
+                            'step' => 'any',
+                            'id' => 'stock_actual_id',
+                            'readonly',
+                        ]) !!}
+                    </div>
+                    <div class="col-md-6">
+                        <label for="stock_edit_id" class="form-label">Stock a Agregar</label>
+                        {!! Form::number('stockMas', '', [
+                            'class' => 'form-control ',
+                            'placeholder' => 'stock',
+                            'step' => 'any',
+                            'id' => 'stock_mas_id'
+                        ]) !!}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0);" class="btn btn-light waves-effect fw-medium" data-bs-dismiss="modal"><i class="ri-close-line me-1 align-middle"></i> Cerrar</a>
+                <button type="submit" class="btn btn-success waves-effect">Guardar</button>
             </div>
             {!! Form::close() !!}
         </div><!-- /.modal-content -->
@@ -202,5 +249,5 @@
     @include('encabezados.js.sweetalert')
     <script src="{{ asset('assets/libs/moment/moment.js') }}"></script>
     <script src="{{ asset('assets/libs/moment/locale/es.js') }}"></script>
-    <script src="{{ asset('dist/js/gestionarProducto/gestionarProducto.js') . '?version=2' }}"></script>
+    <script src="{{ asset('dist/js/gestionarProducto/gestionarProducto.js') . '?version=3' }}"></script>
 @endsection

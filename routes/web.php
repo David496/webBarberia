@@ -59,6 +59,7 @@ Route::post('/registroProductos/productoServicios/agregarProducto', 'registroPro
 Route::get('/registroProductos/productoServicios/getProducto/{id}', 'registroProductoController@getProducto')->name('productos.getProducto');
 Route::post('/registroProductos/productoServicios/editarProducto', 'registroProductoController@editarProducto')->name('productos.editarProducto');
 Route::post('/registroProductos/productoServicios/eliminarProducto', 'registroProductoController@eliminarProducto')->name('productos.eliminarProducto');
+Route::post('/registroProductos/productoServicios/aumentarStock', 'registroProductoController@aumentarStock')->name('productos.aumentarStock');
 
 //GESTIONAR RESERVAS
 Route::get('/registroReservas/reservas', 'registroReservaController@registroReservaVista')->name('reservas.registroReservaVista');

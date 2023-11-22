@@ -41,7 +41,11 @@
                         <div class="text-center mt-sm-5 mb-4 text-white-50">
                             <div>
                                 <a href={{ url('login') }} class="d-inline-block auth-logo">
-                                    {{-- <img src="{{ asset('assets/images/racso/NEW_RACSO_blanco.png') }}" alt="" height="70"> --}}
+                                    @php
+                                        $imagenEmpresa = 'images/empresa/empresaImg_1.jpg';
+                                    @endphp
+
+                                    <img src="{{ file_exists(public_path($imagenEmpresa)) ? asset($imagenEmpresa) : asset('images/empresa/default_logo.jpg') }}" alt="logo empresa" class="img-thumbnail" style="width: 200px; height: 200px;" id="img_id">
                                 </a>
                             </div>
                         </div>
