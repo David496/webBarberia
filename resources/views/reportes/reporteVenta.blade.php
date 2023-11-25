@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Comprobante de Pago</title>
+    <title>Reporte de Venta</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
         }
 
         .ticket {
-            width: 600px;
+            width: 700px;
             margin: 20px auto;
             padding: 10px;
             border: 1px solid #ccc;
@@ -54,13 +54,14 @@
         }
 
         th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
+            border: 1px solid #000000;
+            padding: 5px;
             text-align: left;
+            font-size: 0.8rem;
         }
 
         th {
-            background-color: #f2f2f2;
+            background-color: #d6cfcf;
         }
     </style>
 </head>
@@ -68,52 +69,48 @@
 
 <div class="ticket">
     <div class="header">
-        COMPROBANTE Nº {{$venta->id}}
+        REPORTE Nº {{$reporte->id}}
     </div>
     <div class="informacion">
-        <strong>Nº Boleta : {{$venta->nro_boleta}}</strong> <br>
+        <strong>Reporte : {{$reporte->titulo}}</strong> <br>
         Empresa: {{$empresa->razon_social}} <br>
         Direccion: {{$empresa->direccion}} <br>
         RUC: {{$empresa->ruc}} <br>
         Telefono: {{$empresa->telefono}} <br>
     </div>
     <div class="info">
-        <div><strong>Fecha:</strong> {{$data['fechaEmision']}}</div>
-        <div><strong>Cliente:</strong> {{$venta->cliente->full_name}}</div>
-        <div><strong>DNI:</strong> {{$venta->cliente->dni}}</div>
+        <div><strong>Fechas:</strong> del {{$data['fechaInicio']}} al {{$data['fechaFin']}}</div>
+        <div><strong>Fecha Emisión del Reporte:</strong> {{\Carbon\Carbon::parse($reporte->fecha_emision)->format('d/m/Y')}}</div>
     </div>
     <br>
     <table>
         <thead>
             <tr>
-                <th>Nombre</th>
-                <th>Tipo</th>
-                <th>Cantidad</th>
-                <th>Precio</th>
+                <th>nro Venta</th>
+                <th>nro Boleta</th>
+                <th>Cliente</th>
+                <th>fecha</th>
                 <th>Total</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($items as $item)
+            @foreach($ventas as $venta)
                 <tr>
                     <td>
-                        @if($item->tipo_item == 'PRODUCTO')
-                            {{ $item->producto->nombre_producto }}
-                        @else
-                            {{ $item->servicio->nombre_servicio }}
-                        @endif
+                        {{ $venta->ventaID}}
                     </td>
                     <td>
-                        {{ $item->tipo_item }}
+                        {{ $venta->nro_boleta }}
                     </td>
                     <td>
-                        {{ $item->cantidad }}
+                        {{ $venta->cliente->full_name }}
                     </td>
                     <td>
-                        S/. {{ $item->precio }}
+                        {{-- {{ $venta->fecha_emision }} --}}
+                        {{ \Carbon\Carbon::parse($venta->fecha_emision)->format('d-m-Y') }}
                     </td>
                     <td>
-                        S/. {{ $item->total }}
+                        S/. {{ $venta->total }}
                     </td>
                 </tr>
             @endforeach>
@@ -121,9 +118,8 @@
     </table>
     <br>
     <div class="total">
-        Total a pagar: S/. {{$venta->total}}
+        Total Recaudado: S/. {{$data['totalRecaudado']}}
     </div>
 </div>
 </body>
 </html>
-

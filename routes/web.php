@@ -89,8 +89,12 @@ Route::post('/registroVentas/CrearVenta/eliminarItem', 'registroVentaController@
 Route::post('/registroVentas/CrearVenta/registrarVenta', 'registroVentaController@registrarVenta')->name('reservas.CrearVenta.registrarVenta');
 
 
-
-
+//REPORTES DE VENTA
+Route::get('/registroReportes/reportes', 'registroReporteController@registroReporteVista')->name('reportes.registroReporteVista');
+Route::get('/registroReportes/tablaReportes', 'registroReporteController@tablaReportes')->name('reportes.tablaReportes');
+Route::post('/registroReportes/CrearReporte', 'registroReporteController@CrearReporte')->name('reportes.CrearReporte');
+Route::post('/registroReportes/eliminarReporte', 'registroReporteController@eliminarReporte')->name('reportes.eliminarReporte');
+Route::get('/registroReportes/generarReporte/{id}', 'registroReporteController@generarReporte')->name('reportes.generarReporte');
 
 
 

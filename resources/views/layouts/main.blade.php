@@ -257,7 +257,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="javascript:void(0);">
+                            <a class="nav-link menu-link" href="{{ route('reportes.registroReporteVista')}}">
                                 <i class="las la-file-invoice"></i> <span data-key="t-widgets">Reportes de Venta</span>
                             </a>
                         </li>
