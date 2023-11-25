@@ -69,3 +69,28 @@ Route::get('/registroReservas/getReserva/{id}', 'registroReservaController@getRe
 Route::post('/registroReservas/editarReserva', 'registroReservaController@editarReserva')->name('reservas.editarReserva');
 Route::post('/registroReservas/eliminarReserva', 'registroReservaController@eliminarReserva')->name('reservas.eliminarReserva');
 Route::post('/registroReservas/actualizaEstado', 'registroReservaController@actualizaEstado')->name('reservas.actualizaEstado');
+
+//GESTIONAR VENTAS
+Route::get('/registroVentas/ventas', 'registroVentaController@registroventaVista')->name('ventas.registroVentaVista');
+Route::get('/registroVentas/tablaVentas', 'registroVentaController@tablaVentas')->name('ventas.tablaVentas');
+Route::get('/registroVentas/generarComprobante/{id}', 'registroVentaController@generarComprobante')->name('ventas.generarComprobante');
+Route::post('/registroVentas/eliminarVenta', 'registroVentaController@eliminarVenta')->name('ventas.eliminarVenta');
+
+
+/*crear venta*/
+Route::get('/registroVentas/CrearVenta', 'registroVentaController@CrearVentaVista')->name('ventas.CrearVenta');
+Route::get('/registroVentas/CrearVenta/getProducto/{id}', 'registroVentaController@getProducto')->name('reservas.CrearVenta.getProducto');
+Route::get('/registroVentas/CrearVenta/getServicio/{id}', 'registroVentaController@getServicio')->name('reservas.CrearVenta.getServicio');
+Route::post('/registroVentas/CrearVenta/guardarProducto', 'registroVentaController@guardarProducto')->name('reservas.CrearVenta.guardarProducto');
+Route::post('/registroVentas/CrearVenta/guardarServicio', 'registroVentaController@guardarServicio')->name('reservas.CrearVenta.guardarServicio');
+Route::get('/registroVentas/CrearVenta/tablaItems', 'registroVentaController@tablaItems')->name('reservas.CrearVenta.tablaItems');
+Route::get('/registroVentas/CrearVenta/getTotalItems/{id}', 'registroVentaController@getTotalItems')->name('reservas.CrearVenta.getTotalItems');
+Route::post('/registroVentas/CrearVenta/eliminarItem', 'registroVentaController@eliminarItem')->name('reservas.CrearVenta.eliminarItem');
+Route::post('/registroVentas/CrearVenta/registrarVenta', 'registroVentaController@registrarVenta')->name('reservas.CrearVenta.registrarVenta');
+
+
+
+
+
+
+

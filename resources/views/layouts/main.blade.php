@@ -242,7 +242,7 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="javascript:void(0);">
+                            <a class="nav-link menu-link" href="{{ route('ventas.registroVentaVista')}}">
                                 <i class="las la-file-invoice-dollar"></i> <span data-key="t-widgets">Registro Ventas</span>
                             </a>
                         </li>
@@ -269,7 +269,7 @@
                         @else
                         <li class="menu-title"><span data-key="t-menu">EMPLEADO</span></li>
                         <li class="nav-item">
-                            <a class="nav-link menu-link" href="javascript:void(0);">
+                            <a class="nav-link menu-link" href="{{ route('ventas.registroVentaVista')}}">
                                 <i class="las la-file-invoice-dollar"></i> <span data-key="t-widgets">Registro Ventas</span>
                             </a>
                         </li>

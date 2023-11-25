@@ -18,4 +18,9 @@ class Producto extends Model
     {
         return $this->productoID;
     }
+
+    public function items()
+    {
+        return $this->hasMany('App\Models\Item', 'productoID');
+    }
 }

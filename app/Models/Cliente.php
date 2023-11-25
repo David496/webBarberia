@@ -28,4 +28,9 @@ class Cliente extends Model
     {
         return $this->hasMany('App\Models\Reserva', 'clienteID');
     }
+
+    public function ventas()
+    {
+        return $this->hasMany('App\Models\Venta', 'clienteID');
+    }
 }
